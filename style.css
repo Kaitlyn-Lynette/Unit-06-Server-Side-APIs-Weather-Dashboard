@@ -16,4 +16,5 @@ header {
   float: right;
   border-style: solid;
   margin: 20px;
+  width: 100%;
 }

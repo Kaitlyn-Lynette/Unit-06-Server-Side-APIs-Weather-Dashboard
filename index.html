@@ -14,16 +14,18 @@
     <link rel="stylesheet" href="style.css" />
 
 <!-- TODO: Make a search bar with a finder glass
-Add styling to the header bar 
-Add the date next to the city along with a weather emoji
-Connect to the UX Index  -->
+TODO:Add styling to the header bar 
+TODO:Add the date next to the city along with a weather emoji
+TODO:Make the UV index change colors using https://www.epa.gov/sunsafety/uv-index-scale-0
+-->
   </head>
   <body>
     <header>
       <h1>Weather Dashboard</h1>
     </header>
-    <div class="container">
+    <div class="container-fluid">
       <!-- WHEN I search for a city **Create a search bar using bootstrap  -->
+      
       <div class="row">
         <div id="search-bar" class=col-sm-6> 
           <!-- This form will be where users search for a city -->
@@ -57,59 +59,62 @@ Connect to the UX Index  -->
           </div>
         </div>
       </div>
+      
+      
       <!-- WHEN I view future weather conditions for that city
         THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, and the humidity -->
       <div row>
-        <div id="five-day-forecast" class=col-sm-6>
-          <h2>5-Day Forecast</h2>
+        <h2>5-Day Forecast: </h2>
+        <div id="five-day-forecast" class=card-deck>
+          
           <!-- We'll be seeing a JSON dump of a 5-day Forecast here -->
             <!-- Day ONE -->
-            <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+            <div class="card text-white bg-primary mb-3 col-sm-4" style="max-width: 18rem;">
               <div class="card-body">
                 <h5 class="card-title">Date will populate</h5>
-                <p class="card-text">Weather Icon:<span id=day1></span></p>
-                <p class="card-text">Temperature:<span id=day1></span></p>
-                <p class="card-text">Humidity:</p><span id=day1></span></p>
+                <p class="card-text">Weather Icon: <span id=icon1></span></p>
+                <p class="card-text">Temp: <span id=temp1></span></p>
+                <p class="card-text">Humidity: </p><span id=hum1></span></p>
               </div>
             </div>
             <!-- Day TWO -->
-            <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+            <div class="card text-white bg-primary mb-3 col-sm-4" style="max-width: 18rem;">
               <div class="card-body">
                 <h5 class="card-title">Date will populate</h5>
-                <p class="card-text">Weather Icon:<span id=day2></span></p>
-                <p class="card-text">Temperature:<span id=day2></span></p>
-                <p class="card-text">Humidity:</p><span id=day2></span></p>
+                <p class="card-text">Weather Icon:<span id=icon2></span></p>
+                <p class="card-text">Temp:<span id=temp2></span></p>
+                <p class="card-text">Humidity:</p><span id=hum2></span></p>
               </div>
             </div>
             <!-- Day THREE -->
-            <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+            <div class="card text-white bg-primary mb-3 col-sm-4" style="max-width: 18rem;">
               <div class="card-body">
                 <h5 class="card-title">Date will populate</h5>
-                <p class="card-text">Weather Icon:<span id=day3></span></p>
-                <p class="card-text">Temperature:<span id=day3></span></p>
-                <p class="card-text">Humidity:</p><span id=day3></span></p>
+                <p class="card-text">Weather Icon:<span id=icon3></span></p>
+                <p class="card-text">Temperature:<span id=temp3></span></p>
+                <p class="card-text">Humidity:</p><span id=hum3></span></p>
               </div>
             </div>
             <!-- Day FOUR -->
-            <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+            <div class="card text-white bg-primary mb-3c col-sm-4" style="max-width: 18rem;">
               <div class="card-body">
                 <h5 class="card-title">Date will populate</h5>
-                <p class="card-text">Weather Icon:<span id=day4></span></p>
-                <p class="card-text">Temperature:<span id=day4></span></p>
-                <p class="card-text">Humidity:</p><span id=day4></span></p>
+                <p class="card-text">Weather Icon:<span id=icon4></span></p>
+                <p class="card-text">Temperature:<span id=temp4></span></p>
+                <p class="card-text">Humidity:</p><span id=hum4></span></p>
               </div>
             </div>
             <!-- Day FIVE -->
-            <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+            <div class="card text-white bg-primary mb-3 col-sm-4" style="max-width: 18rem;">
               <div class="card-body">
                 <h5 class="card-title">Date will populate</h5>
-                <p class="card-text">Weather Icon:<span id=day5></span></p>
-                <p class="card-text">Temperature:<span id=day5></span></p>
-                <p class="card-text">Humidity:</p><span id=day5></span></p>
+                <p class="card-text">Weather Icon:<span id=icon5></span></p>
+                <p class="card-text">Temperature:<span id=temp5></span></p>
+                <p class="card-text">Humidity:</p><span id=hum5></span></p>
               </div>
             </div>
         </div>
-      </div>
+    </div>
 
       <!-- WHEN I click on a city in the search history THEN I am again presented
         with current and future conditions for that city WHEN I open the weather
@@ -117,6 +122,7 @@ Connect to the UX Index  -->
       <div id="historical-lookups">
         <!-- We'll be seeing the cities that have been looked up, populate here. -->
       </div>
+
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
       <script type="text/javascript">
         
@@ -133,38 +139,114 @@ Connect to the UX Index  -->
           var city = $("#city-input").val();
           //Here we populate the card title
             $(".card-header").text(city);
-          //Here we contruct our URL;
-          //My API Key
           var APIKey = "1a36c022259a48b1e45a9ee06428ef83";
-          // Building the URL we need to query the database
-          var queryURL =
-            "https://api.openweathermap.org/data/2.5/weather?q=" +
+          //Declaring the variable I'll need for this first API call
+          var lat ='';
+          var lon ='';
+            $.ajax({
+              type: "post",
+              url: "https://api.openweathermap.org/data/2.5/weather?q=" +
             city +
             "&units=imperial&appid=" +
-            APIKey;
-          //displayWeatherInfo function re-renders the HTML to display weather content for 5 days
-          //Date, Icon, Temp, Humidity
-        
-          $.ajax({
-            url: queryURL,
-            method: "GET",
-          }).then(function (response) {
-            //Code Goes Here
-            console.log(response);
-            //Temperate
-            $("#temperature").text(response.main.temp);
-            //Humidity
-            $("#humidity").text(response.main.humidity);
-            //Icon
-            console.log(response.weather.icon);
-            //Wind Speed
-            $("#windspeed").text(response.wind.speed);
-            // //UV Index - It has different URL (https://openweathermap.org/api/uvi)
-            console.log(response.coord.lon);
-            console.log(response.coord.lat);
-            var longitude = response.coord.lon;
-            var latitude = response.coord.lat;
+            APIKey,
+              success: function(response){
+                //Fetching the latitude and longitude needed for the next API call
+                  lat=response.coord.lat;
+                  console.log(lat);
+                  lon=response.coord.lon;
+                  console.log(lon);
+              },
+              complete:function(response){
+                  $.ajax({
+                    type: "post",
+                    url: "https://api.openweathermap.org/data/2.5/onecall?lat="+lat+"&lon="+lon+"&units=imperial&appid="+APIKey,
+                    // data: 'page='+a,
+                    success: function(response){
+                        /*do some thing in second function*/
+                        console.log(response);
+                        console.log(response.daily[0].weather[0].icon);
+                        // Temperature
+                        $("#temperature").text(response.current.temp);
+                        // //Humidity
+                        $("#humidity").text(response.current.humidity);
+                        // //Wind Speed
+                        $("#windspeed").text(response.current.wind_speed);
+                        // // UV Index
+                        $("#uv-index").text(response.current.uvi);
+
+                      // Here we will print the temperate 5-day Forecast
+                      $("#temp1").text(response.daily[0].temp.day);
+                      $("#temp2").text(response.daily[1].temp.day);
+                      $("#temp3").text(response.daily[2].temp.day);
+                      $("#temp4").text(response.daily[3].temp.day);
+                      $("#temp5").text(response.daily[4].temp.day);
+                       // Here we will print the humidity 5-day Forecast
+                      $("#hum1").text(response.daily[0].humidity);
+                      $("#hum2").text(response.daily[1].humidity);
+                      $("#hum3").text(response.daily[2].humidity);
+                      $("#hum4").text(response.daily[3].humidity);
+                      $("#hum5").text(response.daily[4].humidity);
+                      //Here we will print the icons 
+                      // $(".icon").html("<img src='http://openweathermap.org/img/w/" + data.weather[0].icon + ".png' alt='Icon depicting current weather.'>");
+                      $("#icon1").html("<img src='http://openweathermap.org/img/w/" + response.daily[0].weather[0].icon +".png' alt='Icon depicting current weather.'>")
+                      $("#icon2").html("<img src='http://openweathermap.org/img/w/" + response.daily[1].weather[0].icon +".png' alt='Icon depicting current weather.'>")
+                      $("#icon3").html("<img src='http://openweathermap.org/img/w/" + response.daily[2].weather[0].icon +".png' alt='Icon depicting current weather.'>")
+                      $("#icon4").html("<img src='http://openweathermap.org/img/w/" + response.daily[3].weather[0].icon +".png' alt='Icon depicting current weather.'>")
+                      $("#icon5").html("<img src='http://openweathermap.org/img/w/" + response.daily[4].weather[0].icon +".png' alt='Icon depicting current weather.'>")
+                    
+                      // TODO: Populate the date on the cards
+                    },
+                });
+              }
+
+
+
           });
+ 
+            
+
+
+
+
+
+
+
+
+
+
+
+          // //Here we contruct our URL;
+          // //My API Key
+          // var APIKey = "1a36c022259a48b1e45a9ee06428ef83";
+          // // Building the URL we need to query the database
+          // var queryURL =
+            // "https://api.openweathermap.org/data/2.5/weather?q=" +
+            // city +
+            // "&units=imperial&appid=" +
+            // APIKey;
+          // //displayWeatherInfo function re-renders the HTML to display weather content for 5 days
+          // //Date, Icon, Temp, Humidity
+        
+          // $.ajax({
+          //   url: queryURL,
+          //   method: "GET",
+          // }).then(function (response) {
+          //   //Code Goes Here
+          //   console.log(response);
+          //   //Temperate
+          //   $("#temperature").text(response.main.temp);
+          //   //Humidity
+          //   $("#humidity").text(response.main.humidity);
+          //   //Icon
+          //   console.log(response.weather.icon);
+          //   //Wind Speed
+          //   $("#windspeed").text(response.wind.speed);
+          //   // //UV Index - It has different URL (https://openweathermap.org/api/uvi)
+          //   console.log(response.coord.lon);
+          //   console.log(response.coord.lat);
+          //   var longitude = response.coord.lon;
+          //   var latitude = response.coord.lat;
+          // });
        
             //UV Index I think need to be called outside this function but how do I get the lat/long
          
