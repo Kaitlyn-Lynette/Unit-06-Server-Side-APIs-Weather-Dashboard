@@ -1,0 +1,19 @@
+header {
+  text-align: center;
+  background-color: #484848;
+  color: white;
+}
+
+#search-form {
+  border-style: dotted;
+}
+
+.card-body {
+  border-style: solid;
+}
+
+#five-day-forecast {
+  float: right;
+  border-style: solid;
+  margin: 20px;
+}

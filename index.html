@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Weather Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+
+<!-- TODO: Make a search bar with a finder glass
+Add styling to the header bar 
+Add the date next to the city along with a weather emoji
+Connect to the UX Index  -->
+  </head>
+  <body>
+    <header>
+      <h1>Weather Dashboard</h1>
+    </header>
+    <div class="container">
+      <!-- WHEN I search for a city **Create a search bar using bootstrap  -->
+      <div class="row">
+        <div id="search-bar" class=col-sm-6> 
+          <!-- This form will be where users search for a city -->
+          <form id="search-form">
+            <label for="city-input"><h4>Search for a City:</h4></label>
+            <input type="text" id="city-input" /><br />
+            <!-- This button will trigger our AJAX call -->
+            <input id="find-city" type="submit" value="City Search" />
+          </form>
+        </div>
+      <!--THEN I am presented with current and future conditions for that city and that city is added to the search history -->
+      <!-- WHEN I view current weather conditions for that city
+        THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index
+        WHEN I view the UV index
+        THEN I am presented with a color that indicates whether the conditions are favorable, moderate, or severe -->
+        
+        <div id="current-weather" class=col-sm-6>
+        <!-- We'll be seeing a JSON dump of today's forecat here -->
+        <!-- Need to think about how we historically save the data  -->
+          <div class="card-body">
+            <!-- <div class="card-header"> -->
+              <h2 class="card-header"></h2>
+            <!-- <div class="card-body"> -->
+              <p class="card-text"> 
+                <h3>Temperature: <span id="temperature"></span></h3>
+                <h3>Humidity: <span id="humidity"></span></h3>
+                <h3>Wind Speed: <span id="windspeed"></span></h3>
+                <h3>UV Index: <span id="uv-index"></span></h3>
+              </p>
+            <!-- </div> -->
+          </div>
+        </div>
+      </div>
+      <!-- WHEN I view future weather conditions for that city
+        THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, and the humidity -->
+      <div row>
+        <div id="five-day-forecast" class=col-sm-6>
+          <h2>5-Day Forecast</h2>
+          <!-- We'll be seeing a JSON dump of a 5-day Forecast here -->
+            <!-- Day ONE -->
+            <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+              <div class="card-body">
+                <h5 class="card-title">Date will populate</h5>
+                <p class="card-text">Weather Icon:<span id=day1></span></p>
+                <p class="card-text">Temperature:<span id=day1></span></p>
+                <p class="card-text">Humidity:</p><span id=day1></span></p>
+              </div>
+            </div>
+            <!-- Day TWO -->
+            <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+              <div class="card-body">
+                <h5 class="card-title">Date will populate</h5>
+                <p class="card-text">Weather Icon:<span id=day2></span></p>
+                <p class="card-text">Temperature:<span id=day2></span></p>
+                <p class="card-text">Humidity:</p><span id=day2></span></p>
+              </div>
+            </div>
+            <!-- Day THREE -->
+            <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+              <div class="card-body">
+                <h5 class="card-title">Date will populate</h5>
+                <p class="card-text">Weather Icon:<span id=day3></span></p>
+                <p class="card-text">Temperature:<span id=day3></span></p>
+                <p class="card-text">Humidity:</p><span id=day3></span></p>
+              </div>
+            </div>
+            <!-- Day FOUR -->
+            <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+              <div class="card-body">
+                <h5 class="card-title">Date will populate</h5>
+                <p class="card-text">Weather Icon:<span id=day4></span></p>
+                <p class="card-text">Temperature:<span id=day4></span></p>
+                <p class="card-text">Humidity:</p><span id=day4></span></p>
+              </div>
+            </div>
+            <!-- Day FIVE -->
+            <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+              <div class="card-body">
+                <h5 class="card-title">Date will populate</h5>
+                <p class="card-text">Weather Icon:<span id=day5></span></p>
+                <p class="card-text">Temperature:<span id=day5></span></p>
+                <p class="card-text">Humidity:</p><span id=day5></span></p>
+              </div>
+            </div>
+        </div>
+      </div>
+
+      <!-- WHEN I click on a city in the search history THEN I am again presented
+        with current and future conditions for that city WHEN I open the weather
+        dashboard THEN I am presented with the last searched city forecast -->
+      <div id="historical-lookups">
+        <!-- We'll be seeing the cities that have been looked up, populate here. -->
+      </div>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <script type="text/javascript">
+        
+        //Need an IF Statement that is checking which URL to query and an object with the different query URLs
+        
+
+        // Write a .on("click") function that will trigger the AJAX call when the search button is selected
+        $("#find-city").on("click", function (event) {
+          //event.preventDefault() can be used to prevent an event's default behavior.
+          //Here, it prevents the submit button from trying to submit a form when click
+          event.preventDefault();
+
+          //Here we want to grab the text from the input box
+          var city = $("#city-input").val();
+          //Here we populate the card title
+            $(".card-header").text(city);
+          //Here we contruct our URL;
+          //My API Key
+          var APIKey = "1a36c022259a48b1e45a9ee06428ef83";
+          // Building the URL we need to query the database
+          var queryURL =
+            "https://api.openweathermap.org/data/2.5/weather?q=" +
+            city +
+            "&units=imperial&appid=" +
+            APIKey;
+          //displayWeatherInfo function re-renders the HTML to display weather content for 5 days
+          //Date, Icon, Temp, Humidity
+        
+          $.ajax({
+            url: queryURL,
+            method: "GET",
+          }).then(function (response) {
+            //Code Goes Here
+            console.log(response);
+            //Temperate
+            $("#temperature").text(response.main.temp);
+            //Humidity
+            $("#humidity").text(response.main.humidity);
+            //Icon
+            console.log(response.weather.icon);
+            //Wind Speed
+            $("#windspeed").text(response.wind.speed);
+            // //UV Index - It has different URL (https://openweathermap.org/api/uvi)
+            console.log(response.coord.lon);
+            console.log(response.coord.lat);
+            var longitude = response.coord.lon;
+            var latitude = response.coord.lat;
+          });
+       
+            //UV Index I think need to be called outside this function but how do I get the lat/long
+         
+          
+          });
+
+
+      </script>
+    </div>
+  </body>
+</html>
