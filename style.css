@@ -4,7 +4,7 @@ header {
   color: white;
 }
 
-#search-form {
+#parent1 {
   border-style: dotted;
 }
 
@@ -12,7 +12,7 @@ header {
   border-style: solid;
 }
 
-#five-day-forecast {
+#parent2 {
   float: right;
   border-style: solid;
   margin: 20px;

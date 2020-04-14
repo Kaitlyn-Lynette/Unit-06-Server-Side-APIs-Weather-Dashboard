@@ -17,6 +17,7 @@
 TODO:Add styling to the header bar 
 TODO:Add the date next to the city along with a weather emoji
 TODO:Make the UV index change colors using https://www.epa.gov/sunsafety/uv-index-scale-0
+TODO:Create a new DIV under row under the search bar for the cities search to be saved 
 -->
   </head>
   <body>
@@ -25,120 +26,131 @@ TODO:Make the UV index change colors using https://www.epa.gov/sunsafety/uv-inde
     </header>
     <div class="container-fluid">
       <!-- WHEN I search for a city **Create a search bar using bootstrap  -->
-      
-      <div class="row">
-        <div id="search-bar" class=col-sm-6> 
-          <!-- This form will be where users search for a city -->
-          <form id="search-form">
-            <label for="city-input"><h4>Search for a City:</h4></label>
-            <input type="text" id="city-input" /><br />
-            <!-- This button will trigger our AJAX call -->
-            <input id="find-city" type="submit" value="City Search" />
-          </form>
+      <div id="parent">
+        <div class="row">
+          <div class="col-sm-6">
+              <!-- Search Bar -->
+              <div id="search-bar">
+              <form id="search-form">
+                <label for="city-input"><h4>Search for a City:</h4></label>
+                <input type="text" id="city-input" /><br />
+                <!-- This button will trigger our AJAX call -->
+                <input id="find-city" type="submit" value="City Search" />
+              </form>
+              </div>
+            
+          </div>
         </div>
-      <!--THEN I am presented with current and future conditions for that city and that city is added to the search history -->
-      <!-- WHEN I view current weather conditions for that city
-        THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index
-        WHEN I view the UV index
-        THEN I am presented with a color that indicates whether the conditions are favorable, moderate, or severe -->
-        
-        <div id="current-weather" class=col-sm-6>
-        <!-- We'll be seeing a JSON dump of today's forecat here -->
-        <!-- Need to think about how we historically save the data  -->
-          <div class="card-body">
-            <!-- <div class="card-header"> -->
-              <h2 class="card-header"></h2>
-            <!-- <div class="card-body"> -->
-              <p class="card-text"> 
-                <h3>Temperature: <span id="temperature"></span></h3>
-                <h3>Humidity: <span id="humidity"></span></h3>
-                <h3>Wind Speed: <span id="windspeed"></span></h3>
-                <h3>UV Index: <span id="uv-index"></span></h3>
-              </p>
-            <!-- </div> -->
+        <!-- This is where the historical looks ups will saved -->
+        <div class="row">
+          <div class="col-sm-6">
+              <div class="card" style="width: 18rem;">
+              <ul class="list-group list-group-flush" id="search-history">
+              </ul>
+              </div>
           </div>
         </div>
       </div>
-      
-      
-      <!-- WHEN I view future weather conditions for that city
-        THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, and the humidity -->
-      <div row>
-        <h2>5-Day Forecast: </h2>
-        <div id="five-day-forecast" class=card-deck>
           
-          <!-- We'll be seeing a JSON dump of a 5-day Forecast here -->
-            <!-- Day ONE -->
-            <div class="card text-white bg-primary mb-3 col-sm-4" style="max-width: 18rem;">
-              <div class="card-body">
-                <h5 class="card-title">Date will populate</h5>
-                <p class="card-text">Weather Icon: <span id=icon1></span></p>
-                <p class="card-text">Temp: <span id=temp1></span></p>
-                <p class="card-text">Humidity: </p><span id=hum1></span></p>
-              </div>
+      <div id="parent2">
+        <div class="row">
+          <div class="class=col-sm-6">
+            <div id="current-weather">
+              <!-- We'll be seeing a JSON dump of today's forecat here -->
+              <!-- Need to think about how we historically save the data  -->
+                <div class="card-body">
+                  <!-- <div class="card-header"> -->
+                    <h2 class="card-header"></h2>
+                  <!-- <div class="card-body"> -->
+                    <p class="card-text"> 
+                      <h3>Temperature: <span id="temperature"></span></h3>
+                      <h3>Humidity: <span id="humidity"></span></h3>
+                      <h3>Wind Speed: <span id="windspeed"></span></h3>
+                      <h3>UV Index: <span id="uv-index"></span></h3>
+                    </p>
+                  <!-- </div> -->
+                </div>
             </div>
-            <!-- Day TWO -->
-            <div class="card text-white bg-primary mb-3 col-sm-4" style="max-width: 18rem;">
-              <div class="card-body">
-                <h5 class="card-title">Date will populate</h5>
-                <p class="card-text">Weather Icon:<span id=icon2></span></p>
-                <p class="card-text">Temp:<span id=temp2></span></p>
-                <p class="card-text">Humidity:</p><span id=hum2></span></p>
-              </div>
-            </div>
-            <!-- Day THREE -->
-            <div class="card text-white bg-primary mb-3 col-sm-4" style="max-width: 18rem;">
-              <div class="card-body">
-                <h5 class="card-title">Date will populate</h5>
-                <p class="card-text">Weather Icon:<span id=icon3></span></p>
-                <p class="card-text">Temperature:<span id=temp3></span></p>
-                <p class="card-text">Humidity:</p><span id=hum3></span></p>
-              </div>
-            </div>
-            <!-- Day FOUR -->
-            <div class="card text-white bg-primary mb-3c col-sm-4" style="max-width: 18rem;">
-              <div class="card-body">
-                <h5 class="card-title">Date will populate</h5>
-                <p class="card-text">Weather Icon:<span id=icon4></span></p>
-                <p class="card-text">Temperature:<span id=temp4></span></p>
-                <p class="card-text">Humidity:</p><span id=hum4></span></p>
-              </div>
-            </div>
-            <!-- Day FIVE -->
-            <div class="card text-white bg-primary mb-3 col-sm-4" style="max-width: 18rem;">
-              <div class="card-body">
-                <h5 class="card-title">Date will populate</h5>
-                <p class="card-text">Weather Icon:<span id=icon5></span></p>
-                <p class="card-text">Temperature:<span id=temp5></span></p>
-                <p class="card-text">Humidity:</p><span id=hum5></span></p>
-              </div>
-            </div>
+          </div>
         </div>
+        <div class="row">
+          <div class="class=col-sm-6">
+          <div id="five-day-forecast" class=card-deck> 
+              <h2>5-Day Forecast: </h2>
+            <!-- We'll be seeing a JSON dump of a 5-day Forecast here -->
+              <!-- Day ONE -->
+              <div class="card text-white bg-primary mb-3 col-sm-4" style="max-width: 18rem;">
+                <div class="card-body">
+                  <h5 class="card-title">Date will populate</h5>
+                  <p class="card-text">Weather Icon: <span id=icon1></span></p>
+                  <p class="card-text">Temp: <span id=temp1></span></p>
+                  <p class="card-text">Humidity: </p><span id=hum1></span></p>
+                </div>
+              </div>
+              <!-- Day TWO -->
+              <div class="card text-white bg-primary mb-3 col-sm-4" style="max-width: 18rem;">
+                <div class="card-body">
+                  <h5 class="card-title">Date will populate</h5>
+                  <p class="card-text">Weather Icon:<span id=icon2></span></p>
+                  <p class="card-text">Temp:<span id=temp2></span></p>
+                  <p class="card-text">Humidity:</p><span id=hum2></span></p>
+                </div>
+              </div>
+              <!-- Day THREE -->
+              <div class="card text-white bg-primary mb-3 col-sm-4" style="max-width: 18rem;">
+                <div class="card-body">
+                  <h5 class="card-title">Date will populate</h5>
+                  <p class="card-text">Weather Icon:<span id=icon3></span></p>
+                  <p class="card-text">Temperature:<span id=temp3></span></p>
+                  <p class="card-text">Humidity:</p><span id=hum3></span></p>
+                </div>
+              </div>
+              <!-- Day FOUR -->
+              <div class="card text-white bg-primary mb-3c col-sm-4" style="max-width: 18rem;">
+                <div class="card-body">
+                  <h5 class="card-title">Date will populate</h5>
+                  <p class="card-text">Weather Icon:<span id=icon4></span></p>
+                  <p class="card-text">Temperature:<span id=temp4></span></p>
+                  <p class="card-text">Humidity:</p><span id=hum4></span></p>
+                </div>
+              </div>
+              <!-- Day FIVE -->
+              <div class="card text-white bg-primary mb-3 col-sm-4" style="max-width: 18rem;">
+                <div class="card-body">
+                  <h5 class="card-title">Date will populate</h5>
+                  <p class="card-text">Weather Icon:<span id=icon5></span></p>
+                  <p class="card-text">Temperature:<span id=temp5></span></p>
+                  <p class="card-text">Humidity:</p><span id=hum5></span></p>
+                </div>
+              </div>
+          </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-      <!-- WHEN I click on a city in the search history THEN I am again presented
-        with current and future conditions for that city WHEN I open the weather
-        dashboard THEN I am presented with the last searched city forecast -->
-      <div id="historical-lookups">
-        <!-- We'll be seeing the cities that have been looked up, populate here. -->
-      </div>
-
+      
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
       <script type="text/javascript">
         
         //Need an IF Statement that is checking which URL to query and an object with the different query URLs
         
-
         // Write a .on("click") function that will trigger the AJAX call when the search button is selected
         $("#find-city").on("click", function (event) {
           //event.preventDefault() can be used to prevent an event's default behavior.
           //Here, it prevents the submit button from trying to submit a form when click
           event.preventDefault();
-
           //Here we want to grab the text from the input box
+          var city = localStorage.getItem("city");
           var city = $("#city-input").val();
-          //Here we populate the card title
-            $(".card-header").text(city);
+         
+          
+        $(".card-header").text(city);    
+          var cityListItem = $("<li>");
+          cityListItem.text(city);
+          $("#search-history").append(cityListItem);
+          localStorage.setItem("city",city);
+            
           var APIKey = "1a36c022259a48b1e45a9ee06428ef83";
           //Declaring the variable I'll need for this first API call
           var lat ='';
@@ -195,26 +207,14 @@ TODO:Make the UV index change colors using https://www.epa.gov/sunsafety/uv-inde
                       $("#icon5").html("<img src='http://openweathermap.org/img/w/" + response.daily[4].weather[0].icon +".png' alt='Icon depicting current weather.'>")
                     
                       // TODO: Populate the date on the cards
+                      
                     },
                 });
               }
 
-
-
           });
  
             
-
-
-
-
-
-
-
-
-
-
-
           // //Here we contruct our URL;
           // //My API Key
           // var APIKey = "1a36c022259a48b1e45a9ee06428ef83";
